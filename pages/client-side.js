@@ -2,7 +2,7 @@ import Head from "next/head";
 import ClientOnly from "../components/ClientOnly";
 import Countries2 from "../components/Countries2";
 
-export default function Home() {
+export default function ClientSide() {
   return (
     <div>
       <Head>
