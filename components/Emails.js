@@ -4,23 +4,14 @@ import Link from "next/link"
 
 const QUERY = gql`
   query Squirrels {
-    listSquirrels {
-      items {
-        id
-        pizza
-        amount {
-          email
-          name
-          address {
-            line1
-          }
-          cartItems {
-            id
-            quantity
-          }
+    listPosts {
+        items {
+          author
+          content
+          id
+          subject
         }
       }
-    }
   }
 `
 
@@ -40,7 +31,7 @@ export default function Countries2() {
 
 
 
-  const countries = data.listSquirrels
+  const countries = data.listPosts
   console.log(countries)
 
   return (
@@ -49,9 +40,9 @@ export default function Countries2() {
       <div className="wrapper2">
         <div className="box2">Name</div>
 
-        <div className="box2">Address</div>
-        <div className="box2">Order</div>
-        <div className="box2">Action</div>
+        <div className="box2">Email</div>
+        <div className="box2">Subject</div>
+        <div className="box2">Message</div>
       </div>
       {countries.items.map(item => {
         function refreshPage() {
@@ -72,7 +63,7 @@ export default function Countries2() {
         }
 
         const updateItem = async () => {
-          if (item.pizza !== 3) {
+          if (item) {
             const status = { pizza: 3, address: "221b Baker Street" }
 
             try {
@@ -117,29 +108,20 @@ export default function Countries2() {
                 <div className="box">
                   {" "}
                   <Link href="/orders/[id]" as={`/orders/${item.id}`}>
-                    <a>{item.amount.name}</a>
+                    <a>{item.id}</a>
                   </Link>
                 </div>
 
-                <div className="box">{item.amount.address.line1}</div>
+                <div className="box">{item.subject}</div>
 
                 <div className="box">
-                  {" "}
-                  {item.amount.cartItems.map(item => {
-                    return (
-                      <span key={item.id}>
-                        <span>
-                          {item.id}: {item.quantity};{" "}
-                        </span>
-                      </span>
-                    )
-                  })}
+             {item.message}
                 </div>
 
                 <div className="box">
                   <button
                     style={{
-                      backgroundColor: item.pizza === 3 ? "blue" : "red",
+                      backgroundColor: item ? "blue" : "red",
                     }}
                     onClick={updateItem}
                   >
@@ -155,43 +137,34 @@ export default function Countries2() {
         } else {
           return (
             
-              <div className="wrapper" key={item.id}>
-                <div className="box3">
-                  {" "}
-                  <Link href="/orders/[id]" as={`/orders/${item.id}`}>
-                    <a>{item.amount.name}</a>
-                  </Link>
-                </div>
+            <div className="wrapper" key={item.id}>
+            <div className="box3">
+              {" "}
+              <Link href="/orders/[id]" as={`/orders/${item.id}`}>
+                <a>{item.id}</a>
+              </Link>
+            </div>
 
-                <div className="box3">{item.amount.address.line1}</div>
+            <div className="box3">{item.subject}</div>
 
-                <div className="box3">
-                  {" "}
-                  {item.amount.cartItems.map(item => {
-                    return (
-                      <span key={item.id}>
-                        <span>
-                          {item.id}: {item.quantity};{" "}
-                        </span>
-                      </span>
-                    )
-                  })}
-                </div>
+            <div className="box3">
+         {item.message}
+            </div>
 
-                <div className="box3">
-                  <button
-                    style={{
-                      backgroundColor: item.pizza === 3 ? "blue" : "red",
-                    }}
-                    onClick={updateItem}
-                  >
-                    update
-                  </button>
-                  <button id="del" onClick={myFunction}>
-                    delete
-                  </button>
-                </div>
-              </div>
+            <div className="box3">
+              <button
+                style={{
+                  backgroundColor: item ? "blue" : "red",
+                }}
+                onClick={updateItem}
+              >
+                update
+              </button>
+              <button id="del" onClick={myFunction}>
+                delete
+              </button>
+            </div>
+          </div>
           
           )
         }

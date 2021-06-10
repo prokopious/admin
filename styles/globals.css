@@ -86,3 +86,64 @@ body {
 body {
   font-family: Helvetica;
 }
+
+#boxy {
+ 
+  align-items: center;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 5%;
+  background-color: rgba(199, 25, 25, 0.37);
+}
+
+.chipmunk {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 130px;
+}
+
+#boxx {
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.ebox {
+  display: grid;
+  padding: 5%;
+  grid-template-columns: 50%;
+  grid-template-rows: 1fr 1fr 1fr 100px;
+  grid-gap: 20px;
+}
+
+.content {
+ justify-content:first baseline
+}
+
+.b {
+  margin-left: 5%;
+}
+
+.navbar {
+  display: grid;
+  grid-template-columns: 2fr 1fr 4fr 1fr 1fr;
+  padding: 10px;
+  background-color: black;
+  color: white;
+
+}
+
+.navbar a {
+  padding: 5px;
+}
+
+.navbar2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr 4fr 1fr 1fr;
+  padding: 10px;
+  background-color: black;
+  color: white;
+
+}
+
+.navbar2 a {
+  padding: 5px;
+}

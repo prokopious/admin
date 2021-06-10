@@ -1,59 +1,101 @@
-import { useQuery, gql } from "@apollo/client"
-import axios from "axios"
+import React, { useState } from "react"
+import { useMutation, gql } from "@apollo/client"
 
-const QUERY = gql`
-  query Squirrels {
-    listSquirrels {
-      items {
-        id
-        amount {
-          email
-          name
-        }
-      }
+const EMAIL = gql`
+  mutation PostMutation(
+    $content: String!
+    $subject: String!
+    $author: String!
+    $id: ID!
+  ) {
+    createPost(
+      input: { content: $content, author: $author, subject: $subject, id: $id }
+    ) {
+      id
     }
   }
 `
 
-export default function Countries() {
-  const { data, loading, error } = useQuery(QUERY)
-
-  if (loading) {
-    return <h2>Loading...</h2>
-  }
-
-  if (error) {
-    console.error(error)
-    return null
-  }
-
-  const countries = data.listSquirrels
-  console.log(countries)
+const CreateEmail = () => {
+  const [formState, setFormState] = useState({
+    id: "",
+    content: "",
+    author: "",
+    subject: "",
+  })
+  const [createEmail] = useMutation(EMAIL, {
+    variables: {
+      id: formState.id,
+      author: formState.author,
+      content: formState.content,
+      subject: formState.subject,
+    },
+  })
 
   return (
     <div>
-      {countries.items.map(item => {
-        const deleteItem = async () => {
-          try {
-            const resp = axios
-              .delete(
-                `https://dyh4j4u2r5.execute-api.us-east-1.amazonaws.com/latest/orders/${item.id}`
-              )
-              .then(refreshPage)
-          } catch (err) {
-            // Handle Error Here
-            console.error(err)
-          }
-        }
-        return (
-          <div key={item.id}>
-            <p>{item.id}</p>
-            <p>{item.amount.name}</p>
-            <p>{item.amount.email}</p>
-            <button onClick={deleteItem}>delete</button>
-          </div>
-        )
-      })}
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          createEmail()
+        }}
+      >
+        <div className="ebox">
+          <input
+            className="name"
+            value={formState.id}
+            onChange={e =>
+              setFormState({
+                ...formState,
+                id: e.target.value,
+              })
+            }
+            type="text"
+            placeholder="Name"
+          />
+          <input
+            className="email"
+            value={formState.author}
+            onChange={e =>
+              setFormState({
+                ...formState,
+                author: e.target.value,
+              })
+            }
+            type="text"
+            placeholder="Email"
+          />
+          <input
+            className="subject"
+            value={formState.subject}
+            onChange={e =>
+              setFormState({
+                ...formState,
+                subject: e.target.value,
+              })
+            }
+            type="text"
+            placeholder="Subject"
+          />
+          <input
+            className="content"
+            value={formState.content}
+            onChange={e =>
+              setFormState({
+                ...formState,
+                content: e.target.value,
+              })
+            }
+            type="text"
+            placeholder="Content"
+          />
+        </div>
+        <button className="b" type="submit">
+          Submit
+        </button>
+      </form>
     </div>
   )
 }
+
+export default CreateEmail

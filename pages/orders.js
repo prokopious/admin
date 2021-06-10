@@ -4,15 +4,15 @@ import { useEffect, useState } from "react"
 
 
 const SecondPage = () => {
-  const [data, setData] = useState([])
+  const [data2, setData2] = useState([])
 
   useEffect(() => {
     fetch(
       "https://h9i5muxlu7.execute-api.us-east-1.amazonaws.com/latest/orders"
     )
       .then(response => response.json())
-      .then(data => {
-        setData(data) // new
+      .then(data2 => {
+        setData(data2) // new
       })
   }, [])
 
@@ -45,7 +45,7 @@ const SecondPage = () => {
         }
 
         const updateItem = async () => {
-          const status = { pizza: 3, address: "221b Baker Street" }
+          const status = { pizza: 7777, address: "221b Baker Street" }
 
           try {
             const resp = axios

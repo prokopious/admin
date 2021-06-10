@@ -16,7 +16,7 @@ export default function Page() {
         <div>
           <main>
             <ClientOnly>
-              <Countries2 />
+              <Emails />
             </ClientOnly>
           </main>
         </div>
@@ -27,7 +27,7 @@ export default function Page() {
     <>
      <Navbar />
      <ClientOnly>
-             
+       
             </ClientOnly>
  
     </>
